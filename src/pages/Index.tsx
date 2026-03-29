@@ -6,6 +6,7 @@ import { HistoryTab } from "@/components/delivery/HistoryTab";
 import { MapTab } from "@/components/delivery/MapTab";
 import { ScheduleTab } from "@/components/delivery/ScheduleTab";
 import { PaymentsTab, PaymentModal } from "@/components/delivery/PaymentsTab";
+import { ProfileTab } from "@/components/delivery/ProfileTab";
 
 export default function Index() {
   const [tab, setTab] = useState<Tab>("orders");
@@ -100,6 +101,7 @@ export default function Index() {
             { id: "map", label: "Маршрут", icon: "Map" },
             { id: "schedule", label: "Расписание", icon: "Clock" },
             { id: "payments", label: "Платежи", icon: "Wallet" },
+            { id: "profile", label: "Профиль", icon: "UserCircle" },
           ] as { id: Tab; label: string; icon: string }[]).map((t) => (
             <button
               key={t.id}
@@ -142,6 +144,7 @@ export default function Index() {
             onEdit={setEditingPayment}
           />
         )}
+        {tab === "profile" && <ProfileTab />}
       </main>
 
       {/* Add button */}

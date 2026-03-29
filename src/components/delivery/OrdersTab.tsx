@@ -256,8 +256,7 @@ export function OrdersTab({
         orders.map((order, i) => (
           <div
             key={order.id}
-            onClick={() => onEdit(order)}
-            className="bg-card border border-border rounded-xl p-4 card-hover cursor-pointer animate-fade-in"
+            className="bg-card border border-border rounded-xl p-4 animate-fade-in"
             style={{ animationDelay: `${i * 0.05}s` }}
           >
             <div className="flex items-start justify-between mb-2">
@@ -267,9 +266,18 @@ export function OrdersTab({
                   {statusLabel[order.status]}
                 </span>
               </div>
-              <div className="flex items-center gap-1 text-primary font-semibold text-sm">
-                <Icon name={paymentIcon[order.paymentType]} size={14} />
-                <span>{order.payment} ₽</span>
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 text-primary font-semibold text-sm">
+                  <Icon name={paymentIcon[order.paymentType]} size={14} />
+                  <span>{order.payment} ₽</span>
+                </div>
+                <button
+                  onClick={() => onEdit(order)}
+                  className="flex items-center gap-1 bg-muted hover:bg-primary hover:text-primary-foreground text-muted-foreground rounded-lg px-2 py-1 text-xs font-medium transition-colors"
+                >
+                  <Icon name="Pencil" size={11} />
+                  Edit
+                </button>
               </div>
             </div>
             <p className="text-sm font-medium text-foreground mb-1 leading-snug">{order.address}</p>

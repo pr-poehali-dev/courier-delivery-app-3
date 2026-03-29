@@ -4,43 +4,43 @@
 
 @layer base {
   :root {
-    --background: 0 0% 97%;
-    --foreground: 0 0% 8%;
+    --background: 220 16% 10%;
+    --foreground: 220 10% 92%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 8%;
+    --card: 220 14% 14%;
+    --card-foreground: 220 10% 92%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 8%;
+    --popover: 220 14% 14%;
+    --popover-foreground: 220 10% 92%;
 
     --primary: 16 90% 52%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 94%;
-    --secondary-foreground: 0 0% 20%;
+    --secondary: 220 12% 18%;
+    --secondary-foreground: 220 10% 80%;
 
-    --muted: 0 0% 94%;
-    --muted-foreground: 0 0% 50%;
+    --muted: 220 12% 18%;
+    --muted-foreground: 220 8% 55%;
 
     --accent: 16 90% 52%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 88%;
-    --input: 0 0% 88%;
+    --border: 220 12% 20%;
+    --input: 220 12% 20%;
     --ring: 16 90% 52%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 0 0% 20%;
+    --sidebar-background: 220 14% 12%;
+    --sidebar-foreground: 220 10% 80%;
     --sidebar-primary: 16 90% 52%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 94%;
-    --sidebar-accent-foreground: 0 0% 20%;
-    --sidebar-border: 0 0% 88%;
+    --sidebar-accent: 220 12% 18%;
+    --sidebar-accent-foreground: 220 10% 80%;
+    --sidebar-border: 220 12% 20%;
     --sidebar-ring: 16 90% 52%;
   }
 }
@@ -108,23 +108,23 @@
 }
 
 .status-active {
-  background-color: hsl(142 71% 45% / 0.12);
-  color: hsl(142 71% 30%);
+  background-color: hsl(142 71% 45% / 0.15);
+  color: hsl(142 71% 55%);
 }
 
 .status-pending {
-  background-color: hsl(38 92% 50% / 0.12);
-  color: hsl(38 72% 35%);
+  background-color: hsl(38 92% 50% / 0.15);
+  color: hsl(38 92% 60%);
 }
 
 .status-done {
-  background-color: hsl(0 0% 88%);
-  color: hsl(0 0% 45%);
+  background-color: hsl(220 12% 22%);
+  color: hsl(220 8% 55%);
 }
 
 .status-cancelled {
-  background-color: hsl(0 84% 60% / 0.1);
-  color: hsl(0 84% 45%);
+  background-color: hsl(0 72% 51% / 0.12);
+  color: hsl(0 72% 62%);
 }
 
 .card-hover {
@@ -134,7 +134,7 @@
 }
 
 .card-hover:hover {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
   transform: translateY(-1px);
 }
 
@@ -158,5 +158,15 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  box-shadow: 0 0 0 2px hsl(16 90% 52% / 0.2);
+  box-shadow: 0 0 0 2px hsl(16 90% 52% / 0.3);
+}
+
+input,
+textarea,
+select {
+  color-scheme: dark;
+}
+
+.field-input {
+  @apply w-full bg-muted rounded-lg px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground border border-transparent;
 }
