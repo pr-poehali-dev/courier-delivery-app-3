@@ -2,6 +2,7 @@ import { useState } from "react";
 import Icon from "@/components/ui/icon";
 import { Order, Payment, Tab, INITIAL_ORDERS, INITIAL_PAYMENTS } from "@/components/delivery/types";
 import { OrdersTab, OrderModal } from "@/components/delivery/OrdersTab";
+import { HistoryTab } from "@/components/delivery/HistoryTab";
 import { MapTab } from "@/components/delivery/MapTab";
 import { ScheduleTab } from "@/components/delivery/ScheduleTab";
 import { PaymentsTab, PaymentModal } from "@/components/delivery/PaymentsTab";
@@ -17,7 +18,7 @@ export default function Index() {
 
   const activeOrders = orders.filter((o) => o.status === "active" || o.status === "pending");
   const doneOrders = orders.filter((o) => o.status === "done" || o.status === "cancelled");
-  const displayOrders = filterStatus === "all" ? orders : filterStatus === "active" ? activeOrders : doneOrders;
+  const displayOrders = filterStatus === "all" ? activeOrders : activeOrders.filter((o) => o.status === filterStatus);
 
   const todayOrders = orders.filter((o) => o.date === "2026-03-29");
   const totalEarned = payments.filter((p) => p.status === "paid").reduce((s, p) => s + p.amount, 0);
@@ -77,7 +78,7 @@ export default function Index() {
       <header className="bg-card border-b border-border px-4 pt-6 pb-0">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-xl font-bold text-foreground tracking-tight">КурьерПро</h1>
+            <h1 className="text-xl font-bold text-foreground tracking-tight">Достависта</h1>
             <p className="text-xs text-muted-foreground font-mono mt-0.5">29 марта 2026</p>
           </div>
           <div className="flex items-center gap-3">
@@ -95,6 +96,7 @@ export default function Index() {
         <nav className="flex gap-0">
           {([
             { id: "orders", label: "Заказы", icon: "Package" },
+            { id: "history", label: "История", icon: "ClipboardList" },
             { id: "map", label: "Маршрут", icon: "Map" },
             { id: "schedule", label: "Расписание", icon: "Clock" },
             { id: "payments", label: "Платежи", icon: "Wallet" },
@@ -122,7 +124,12 @@ export default function Index() {
             setFilterStatus={setFilterStatus}
             onEdit={setEditingOrder}
             activeCount={activeOrders.length}
-            doneCount={doneOrders.length}
+          />
+        )}
+        {tab === "history" && (
+          <HistoryTab
+            orders={orders}
+            onEdit={setEditingOrder}
           />
         )}
         {tab === "map" && <MapTab orders={activeOrders} />}

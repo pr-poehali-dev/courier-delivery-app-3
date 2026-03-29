@@ -25,7 +25,7 @@ export interface Payment {
   status: "paid" | "pending" | "cancelled";
 }
 
-export type Tab = "orders" | "map" | "schedule" | "payments";
+export type Tab = "orders" | "history" | "map" | "schedule" | "payments";
 
 export const INITIAL_ORDERS: Order[] = [
   {

@@ -211,15 +211,14 @@ export function OrdersTab({
   setFilterStatus: (v: "all" | "active" | "done") => void;
   onEdit: (o: Order) => void;
   activeCount: number;
-  doneCount: number;
 }) {
   return (
     <div className="p-4 space-y-3 animate-fade-in">
       <div className="grid grid-cols-3 gap-2">
         {[
-          { label: "Активных", value: activeCount, color: "text-green-600" },
-          { label: "Всего", value: orders.length, color: "text-foreground" },
-          { label: "Выполнено", value: doneCount, color: "text-muted-foreground" },
+          { label: "В пути", value: activeCount - (orders.filter(o => o.status === "pending").length), color: "text-green-600" },
+          { label: "Ожидают", value: orders.filter(o => o.status === "pending").length, color: "text-orange-500" },
+          { label: "Всего", value: activeCount, color: "text-foreground" },
         ].map((s) => (
           <div key={s.label} className="bg-card rounded-xl p-3 border border-border text-center">
             <p className={`text-lg font-bold ${s.color}`}>{s.value}</p>
@@ -231,8 +230,8 @@ export function OrdersTab({
       <div className="flex gap-2 bg-muted rounded-xl p-1">
         {[
           { id: "all", label: "Все" },
-          { id: "active", label: "Активные" },
-          { id: "done", label: "Выполненные" },
+          { id: "active", label: "В пути" },
+          { id: "pending", label: "Ожидают" },
         ].map((f) => (
           <button
             key={f.id}
