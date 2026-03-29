@@ -16,6 +16,7 @@ export default function Index() {
   const [showAddOrder, setShowAddOrder] = useState(false);
   const [filterStatus, setFilterStatus] = useState<"all" | "active" | "done">("all");
   const [editingPayment, setEditingPayment] = useState<Payment | null>(null);
+  const [editMode, setEditMode] = useState(false);
 
   const activeOrders = orders.filter((o) => o.status === "active" || o.status === "pending");
   const doneOrders = orders.filter((o) => o.status === "done" || o.status === "cancelled");
@@ -126,12 +127,14 @@ export default function Index() {
             setFilterStatus={setFilterStatus}
             onEdit={setEditingOrder}
             activeCount={activeOrders.length}
+            editMode={editMode}
           />
         )}
         {tab === "history" && (
           <HistoryTab
             orders={orders}
             onEdit={setEditingOrder}
+            editMode={editMode}
           />
         )}
         {tab === "map" && <MapTab orders={activeOrders} />}
@@ -147,16 +150,34 @@ export default function Index() {
         {tab === "profile" && <ProfileTab />}
       </main>
 
-      {/* Add button */}
-      {tab === "orders" && (
-        <div className="p-4 bg-card border-t border-border">
+      {/* Bottom bar — только на вкладках заказов и истории */}
+      {(tab === "orders" || tab === "history") && (
+        <div className="p-4 bg-card border-t border-border flex items-center gap-3">
           <button
-            onClick={() => { setEditingOrder(newOrderTemplate()); setShowAddOrder(true); }}
-            className="w-full bg-primary text-primary-foreground rounded-xl py-3 font-semibold text-sm flex items-center justify-center gap-2 active:scale-95 transition-transform"
+            onClick={() => setEditMode((v) => !v)}
+            className={`flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition-all active:scale-95 flex-shrink-0 ${
+              editMode
+                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30"
+                : "bg-muted text-muted-foreground"
+            }`}
           >
-            <Icon name="Plus" size={18} />
-            Новый заказ
+            <Icon name={editMode ? "PencilOff" : "Pencil"} size={16} />
+            {editMode ? "Выкл." : "Ред."}
           </button>
+
+          {tab === "orders" ? (
+            <button
+              onClick={() => { setEditingOrder(newOrderTemplate()); setShowAddOrder(true); }}
+              className="flex-1 bg-primary text-primary-foreground rounded-xl py-3 font-semibold text-sm flex items-center justify-center gap-2 active:scale-95 transition-transform"
+            >
+              <Icon name="Plus" size={18} />
+              Новый заказ
+            </button>
+          ) : (
+            <p className="flex-1 text-xs text-muted-foreground">
+              {editMode ? "Нажмите Edit на нужном заказе" : "Включите режим редактирования"}
+            </p>
+          )}
         </div>
       )}
 

@@ -204,13 +204,14 @@ export function OrdersTab({
   setFilterStatus,
   onEdit,
   activeCount,
-  doneCount,
+  editMode,
 }: {
   orders: Order[];
   filterStatus: string;
   setFilterStatus: (v: "all" | "active" | "done") => void;
   onEdit: (o: Order) => void;
   activeCount: number;
+  editMode: boolean;
 }) {
   return (
     <div className="p-4 space-y-3 animate-fade-in">
@@ -256,7 +257,12 @@ export function OrdersTab({
         orders.map((order, i) => (
           <div
             key={order.id}
-            className="bg-card border border-border rounded-xl p-4 animate-fade-in"
+            onClick={editMode ? () => onEdit(order) : undefined}
+            className={`bg-card border rounded-xl p-4 animate-fade-in transition-all ${
+              editMode
+                ? "border-primary/40 cursor-pointer ring-1 ring-primary/20 hover:border-primary/70"
+                : "border-border"
+            }`}
             style={{ animationDelay: `${i * 0.05}s` }}
           >
             <div className="flex items-start justify-between mb-2">
@@ -271,13 +277,11 @@ export function OrdersTab({
                   <Icon name={paymentIcon[order.paymentType]} size={14} />
                   <span>{order.payment} ₽</span>
                 </div>
-                <button
-                  onClick={() => onEdit(order)}
-                  className="flex items-center gap-1 bg-muted hover:bg-primary hover:text-primary-foreground text-muted-foreground rounded-lg px-2 py-1 text-xs font-medium transition-colors"
-                >
-                  <Icon name="Pencil" size={11} />
-                  Edit
-                </button>
+                {editMode && (
+                  <div className="flex items-center gap-1 text-primary text-xs font-medium animate-scale-in">
+                    <Icon name="Pencil" size={11} />
+                  </div>
+                )}
               </div>
             </div>
             <p className="text-sm font-medium text-foreground mb-1 leading-snug">{order.address}</p>
