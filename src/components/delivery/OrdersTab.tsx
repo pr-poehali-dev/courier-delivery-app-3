@@ -215,6 +215,12 @@ export function OrdersTab({
 }) {
   return (
     <div className="p-4 space-y-3 animate-fade-in">
+      {editMode && (
+        <div className="flex items-center gap-2 bg-primary/10 border border-primary/30 rounded-xl px-3 py-2 animate-scale-in">
+          <Icon name="Pencil" size={13} className="text-primary flex-shrink-0" />
+          <p className="text-xs text-primary font-medium">Режим редактирования включён — нажмите на заказ</p>
+        </div>
+      )}
       <div className="grid grid-cols-3 gap-2">
         {[
           { label: "В пути", value: activeCount - (orders.filter(o => o.status === "pending").length), color: "text-green-600" },
